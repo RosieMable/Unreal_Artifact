@@ -10,11 +10,7 @@
 UCLASS()
 class ARTIFACT_API APortal : public AActor
 {
-	GENERATED_BODY()
-	
-public:	
-	// Sets default values for this actor's properties
-	APortal();
+	GENERATED_UCLASS_BODY()
 
 protected:
 	// Called when the game starts or when spawned
@@ -38,5 +34,40 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Portal")
 		void SetRTT(UTexture* RenderTexture);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Portal")
+		void ForceTick();
+
+	//Target of where the portal is looking
+	UFUNCTION(BlueprintPure, Category = "Portal")
+		AActor* GetTarget();
+
+	UFUNCTION(BlueprintCallable, Category = "Portal")
+		void SetTarget(AActor* newTarget);
+
+	//Helpers
+	UFUNCTION(BlueprintCallable, Category = "Portal|Helpers")
+		bool isPointInFrontOfPortal(FVector point, FVector portalLocation, FVector portalNormal);
+
+	UFUNCTION(BlueprintCallable, Category = "Portal|Helpers")
+		bool isPointCrossingPortal(FVector point, FVector portalLocation, FVector portalNormal);
+
+	UFUNCTION(BlueprintCallable, Category = "Portal|Helpers")
+		void TeleportActor(AActor* actorToTeleport);
+
+protected:
+	UPROPERTY(BlueprintReadOnly)
+		USceneComponent* PortalRootComponent;
+
+private:
+	bool isActive;
+
+	AActor* Target;
+
+	//Used to track movement of a point
+	FVector LastPos;
+	bool LastInFront;
+
+
 
 };
