@@ -23,15 +23,16 @@ FVector UStaticTools::ConvertLocationToActorSpace(FVector Location, AActor* Refe
 
 	//Compute the dot product between vectors to determine multiple angles
 	FVector Dots;
-	Dots.X = FVector::DotProduct(Direction, Reference->GetActorForwardVector);
-	Dots.Y = FVector::DotProduct(Direction, Reference->GetActorRightVector);
-	Dots.Z = FVector::DotProduct(Direction, Reference->GetActorUpVector);
+	Dots.X = FVector::DotProduct(Direction, Reference->GetActorForwardVector());
+	Dots.Y = FVector::DotProduct(Direction, Reference->GetActorRightVector());
+	Dots.Z = FVector::DotProduct(Direction, Reference->GetActorUpVector());
 
 	FVector NewDirection = Dots.X * Target->GetActorForwardVector()
 		+ Dots.Y * Target->GetActorRightVector()
 		+ Dots.Z * Target->GetActorUpVector();
 
 	return TargetLocation + NewDirection;
+
 }
 
 FRotator UStaticTools::ConvertRotationToActorSpace(FRotator Rotation, AActor* Reference, AActor* Target)

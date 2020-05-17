@@ -133,7 +133,7 @@ void APortal::TeleportActor(AActor* actorToTeleport)
 
 	//Compute and apply new location
 	FHitResult HitResul;
-	FVector NewLocation = UStaticTools::ConvertLocationToActorSpace(actorToTeleport->GetActorLocation, this, Target);
+	FVector NewLocation = UStaticTools::ConvertLocationToActorSpace(actorToTeleport->GetActorLocation(), this, Target);
 
 	actorToTeleport->SetActorLocation(NewLocation,
 		false,
@@ -141,7 +141,7 @@ void APortal::TeleportActor(AActor* actorToTeleport)
 		ETeleportType::TeleportPhysics);
 
 	//Compute and apply new rotation
-	FRotator NewRotation = UStaticTools::ConvertRotationToActorSpace(actorToTeleport->GetActorRotation, this, Target);
+	FRotator NewRotation = UStaticTools::ConvertRotationToActorSpace(actorToTeleport->GetActorRotation(), this, Target);
 
 	//Apply new rotation
 	actorToTeleport->SetActorRotation(NewRotation);
@@ -159,10 +159,11 @@ void APortal::TeleportActor(AActor* actorToTeleport)
 				+ Dots.Y * Target->GetActorRightVector()
 				+ Dots.Z * Target->GetActorUpVector();
 
-			EC->GetVelocity = NewVelocity;
-		
-	}
+			EC->GetVelocity() = NewVelocity;
+
+		}
 		//Cleanup Teleport
 		LastPos = NewLocation;
+	}
 }
 
